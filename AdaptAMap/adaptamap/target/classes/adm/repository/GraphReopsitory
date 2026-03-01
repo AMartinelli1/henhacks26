@@ -1,0 +1,80 @@
+package adm.repository;
+
+import adm.model.Node;
+import adm.model.Edge;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+
+import java.util.List;
+
+@Repository
+public class GraphRepository {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    public GraphRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    // ===============================
+    // Get nodes in bounding box
+    // ===============================
+    public List<Node> findNodesInBox(
+            double minLat, double maxLat,
+            double minLon, double maxLon) {
+
+        String sql = """
+            SELECT NODE_ID, LAT, LON, BUILDING_ID, FLOOR
+            FROM NODES
+            WHERE LAT BETWEEN ? AND ?
+              AND LON BETWEEN ? AND ?
+        """;
+
+        return jdbcTemplate.query(sql,
+                (rs, rowNum) -> new Node(
+                        rs.getString("NODE_ID"),
+                        rs.getDouble("LAT"),
+                        rs.getDouble("LON"),
+                        rs.getString("BUILDING_ID"),
+                        rs.getString("FLOOR")
+                ),
+                minLat, maxLat, minLon, maxLon);
+    }
+
+    // ===============================
+    // Get edges in bounding box
+    // ===============================
+    public List<Edge> findEdgesInBox(
+            double minLat, double maxLat,
+            double minLon, double maxLon) {
+
+        String sql = """
+            WITH BOX_NODES AS (
+                SELECT NODE_ID
+                FROM NODES
+                WHERE LAT BETWEEN ? AND ?
+                  AND LON BETWEEN ? AND ?
+            )
+            SELECT e.*
+            FROM EDGES e
+            JOIN BOX_NODES a ON a.NODE_ID = e.FROM_NODE_ID
+            JOIN BOX_NODES b ON b.NODE_ID = e.TO_NODE_ID
+        """;
+
+        return jdbcTemplate.query(sql,
+                (rs, rowNum) -> {
+                    Edge edge = new Edge();
+                    edge.setEdgeId(rs.getString("EDGE_ID"));
+                    edge.setFromNodeId(rs.getString("FROM_NODE_ID"));
+                    edge.setToNodeId(rs.getString("TO_NODE_ID"));
+                    edge.setDistanceM(rs.getDouble("DISTANCE_M"));
+                    edge.setEdgeType(rs.getString("EDGE_TYPE"));
+                    edge.setAccessible(rs.getBoolean("IS_ACCESSIBLE"));
+                    edge.setSlope((Double) rs.getObject("SLOPE"));
+                    edge.setIndoor(rs.getBoolean("IS_INDOOR"));
+                    return edge;
+                },
+                minLat, maxLat, minLon, maxLon);
+    }
+}
