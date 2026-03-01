@@ -98,8 +98,24 @@
 
         .search-box input { 
             width: 100%; 
-            padding: 10px; 
-            box-sizing: border-box; 
+            padding: 10px 14px; 
+            box-sizing: border-box;
+            border: 1.5px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--white);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 162, 77, 0.2);
+        }
+
+        .search-box input::placeholder {
+            color: #bbb;
         }
 
         /* Pin type grid */
@@ -226,8 +242,46 @@
 
         .btn-pick-location:hover { background: #4a2808; text-decoration: none; }
 
-        /* Sidebar pin list */
         #pin-list { font-size: 14px; }
+
+        /* Sidebar sections */
+        .sidebar-section {
+            background: var(--white);
+            border: 1px solid #e8e0d4;
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+
+        .sidebar-section strong {
+            display: block;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--brown);
+            margin-bottom: 10px;
+        }
+
+        .search-box label strong {
+            display: block;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--brown);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .filter-box label {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .filter-box input[type="checkbox"] {
+            accent-color: var(--red);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
 
         .pin-list-item {
             padding: 8px 6px;
@@ -280,19 +334,19 @@
 
 <main>
     <section id="sidebar" role="complementary" aria-label="Map controls and pin list">
-        <div class="search-box">
+        <div class="search-box sidebar-section">
             <label for="location-search"><strong>Search Location</strong></label>
             <input type="text" id="location-search" placeholder="Enter address or coordinates...">
         </div>
-        <div class="filter-box">
-            <strong>Filter Pins</strong><br>
+        <div class="filter-box sidebar-section">
+            <strong>Filter Pins</strong>
             <input type="checkbox" id="filter-incidents" checked>
             <label for="filter-incidents" style="display:inline;">Incidents</label><br>
             <input type="checkbox" id="filter-markers" checked>
             <label for="filter-markers" style="display:inline;">Saved Places</label>
         </div>
-        <div>
-            <strong>Pins on Map</strong>
+        <div class="sidebar-section">
+            <strong>Your Pins</strong>
             <div id="pin-list"><em style="color:#999;font-size:13px;">No pins added yet.</em></div>
         </div>
     </section>
