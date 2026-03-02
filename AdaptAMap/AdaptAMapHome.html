@@ -38,7 +38,8 @@
             border: 0px solid;
             background: var(--tan);
             font-weight: 500;
-            font-size: 20px;
+            font-size: 22px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         button:hover { text-decoration: underline; }
@@ -98,8 +99,24 @@
 
         .search-box input { 
             width: 100%; 
-            padding: 10px; 
-            box-sizing: border-box; 
+            padding: 10px 14px; 
+            box-sizing: border-box;
+            border: 1.5px solid #ddd;
+            border-radius: 20px;
+            font-size: 16px;
+            font-family: inherit;
+            background: var(--white);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 162, 77, 0.2);
+        }
+
+        .search-box input::placeholder {
+            color: #bbb;
         }
 
         /* Pin type grid */
@@ -138,7 +155,7 @@
         }
 
         .pin-type-option span {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--brown);
         }
@@ -148,7 +165,7 @@
             margin: 8px 0 12px;
             padding: 10px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 16px;
             background: #fff8e1;
             border: 1px solid var(--gold);
             color: #7a5c00;
@@ -163,7 +180,7 @@
         /* Modal form elements */
         .modal label {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 16px;
             color: var(--brown);
             display: block;
             margin-bottom: 4px;
@@ -177,7 +194,7 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 16px;
             resize: vertical;
         }
 
@@ -195,7 +212,7 @@
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 600;
             flex: 1;
         }
@@ -208,7 +225,7 @@
             border: 1px solid #ccc;
             padding: 10px 20px;
             border-radius: 6px;
-            font-size: 15px;
+            font-size: 17px;
             flex: 1;
         }
 
@@ -218,7 +235,7 @@
             border: none;
             padding: 8px 14px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 16px;
             display: block;
             width: 100%;
             text-align: center;
@@ -226,8 +243,46 @@
 
         .btn-pick-location:hover { background: #4a2808; text-decoration: none; }
 
-        /* Sidebar pin list */
-        #pin-list { font-size: 14px; }
+        #pin-list { font-size: 16px; }
+
+        /* Sidebar sections */
+        .sidebar-section {
+            background: var(--white);
+            border: 1px solid #e8e0d4;
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+
+        .sidebar-section strong {
+            display: block;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--brown);
+            margin-bottom: 10px;
+        }
+
+        .search-box label strong {
+            display: block;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--brown);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .filter-box label {
+            font-size: 16px;
+            color: #444;
+        }
+
+        .filter-box input[type="checkbox"] {
+            accent-color: var(--red);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
 
         .pin-list-item {
             padding: 8px 6px;
@@ -237,8 +292,8 @@
 
         .pin-list-item:hover { background: var(--tan); border-radius: 4px; }
         .pin-list-item strong { display: block; margin-bottom: 2px; }
-        .pin-list-item em { color: #666; font-size: 12px; }
-        .pin-list-item .incident-note { color: var(--red); font-size: 12px; display: block; margin-top: 2px; }
+        .pin-list-item em { color: #666; font-size: 14px; }
+        .pin-list-item .incident-note { color: var(--red); font-size: 14px; display: block; margin-top: 2px; }
 
         /* Report modal pin preview */
         #report-pin-preview {
@@ -247,7 +302,7 @@
             padding: 10px;
             background: var(--tan);
             border-radius: 6px;
-            font-size: 13px;
+            font-size: 15px;
             line-height: 1.6;
         }
 
@@ -266,6 +321,40 @@
             z-index: 3000;
             white-space: nowrap;
         }
+        /* Toggle switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #ccc;
+            border-radius: 28px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider { background: var(--red); }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(24px); }
     </style>
 </head>
 <body>
@@ -275,25 +364,26 @@
     <div class="nav-left">
         <button onclick="openModal('pinModal')" aria-label="Add a pin to the map">Add Pin</button>
         <button onclick="openModal('reportModal')" aria-label="Report an incident">Report Incident</button>
+        <button onclick="openModal('settingsModal')" aria-label="Open settings">Adjust Font</button>
     </div>
 </header>
 
 <main>
     <section id="sidebar" role="complementary" aria-label="Map controls and pin list">
-        <div class="search-box">
+        <div class="search-box sidebar-section">
             <label for="location-search"><strong>Search Location</strong></label>
             <input type="text" id="location-search" placeholder="Enter address or coordinates...">
         </div>
-        <div class="filter-box">
-            <strong>Filter Pins</strong><br>
+        <div class="filter-box sidebar-section">
+            <strong>Filter Pins</strong>
             <input type="checkbox" id="filter-incidents" checked>
             <label for="filter-incidents" style="display:inline;">Incidents</label><br>
             <input type="checkbox" id="filter-markers" checked>
             <label for="filter-markers" style="display:inline;">Saved Places</label>
         </div>
-        <div>
-            <strong>Pins on Map</strong>
-            <div id="pin-list"><em style="color:#999;font-size:13px;">No pins added yet.</em></div>
+        <div class="sidebar-section">
+            <strong>Your Pins</strong>
+            <div id="pin-list"><em style="color:#999;font-size:15px;">No pins added yet.</em></div>
         </div>
     </section>
 
@@ -401,6 +491,47 @@
     <div class="modal-actions">
         <button class="btn-primary" onclick="submitReport()">Submit Report</button>
         <button class="btn-secondary" onclick="closeModals()">Cancel</button>
+    </div>
+</div>
+
+<!-- ======================================================
+     SETTINGS MODAL
+====================================================== -->
+<div id="settingsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+    <h3 id="settingsModalTitle">⚙️ Accessibility Settings</h3>
+
+    <div style="display:flex; flex-direction:column; gap:20px;">
+
+        <!-- Bold Text Toggle -->
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+            <label for="boldToggle" style="font-weight:600; font-size:16px; color:var(--brown); margin:0;">
+                Bold All Text
+            </label>
+            <label class="toggle-switch" aria-label="Toggle bold text">
+                <input type="checkbox" id="boldToggle" onchange="applySettings()">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <!-- Font Size Slider -->
+        <div>
+            <label for="fontSizeSlider" style="font-weight:600; font-size:16px; color:var(--brown); display:block; margin-bottom:10px;">
+                Font Size: <span id="fontSizeLabel">16px</span>
+            </label>
+            <input type="range" id="fontSizeSlider" min="12" max="28" step="1" value="16"
+                   oninput="document.getElementById('fontSizeLabel').textContent=this.value+'px'; applySettings()"
+                   style="width:100%; accent-color:var(--red); cursor:pointer; height:6px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; color:#999; margin-top:4px;">
+                <span>Small</span><span>Default</span><span>Large</span>
+            </div>
+        </div>
+
+        <!-- Reset -->
+        <button class="btn-secondary" onclick="resetSettings()" style="font-family:inherit;">Reset to Default</button>
+    </div>
+
+    <div class="modal-actions">
+        <button class="btn-primary" onclick="closeModals()">Done</button>
     </div>
 </div>
 
@@ -700,6 +831,43 @@
                 if (map.hasLayer(pin.marker)) map.removeLayer(pin.marker);
             }
         });
+    }
+    // ─────────────────────────────────────────────────────────────────
+    // SETTINGS
+    // ─────────────────────────────────────────────────────────────────
+    function applySettings() {
+        const bold = document.getElementById('boldToggle').checked;
+        const size = document.getElementById('fontSizeSlider').value;
+
+        document.body.style.fontWeight = bold ? '700' : '';
+        document.documentElement.style.setProperty('--user-font-size', size + 'px');
+
+        // Apply font size to body and common elements
+        const targets = document.querySelectorAll(
+            'body, button, input, select, textarea, label, p, span, strong, em, div, h3'
+        );
+        targets.forEach(el => {
+            // Only override elements that don't have a fixed structural size
+            el.style.fontSize = size + 'px';
+        });
+
+        // Keep logo and checkboxes unaffected
+        document.querySelector('.logo').style.fontSize = '';
+    }
+
+    function resetSettings() {
+        document.getElementById('boldToggle').checked = false;
+        document.getElementById('fontSizeSlider').value = 16;
+        document.getElementById('fontSizeLabel').textContent = '16px';
+
+        document.body.style.fontWeight = '';
+
+        const targets = document.querySelectorAll(
+            'body, button, input, select, textarea, label, p, span, strong, em, div, h3'
+        );
+        targets.forEach(el => { el.style.fontSize = ''; });
+
+        showToast('Settings reset to default.');
     }
 
 
